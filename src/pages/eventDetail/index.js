@@ -17,7 +17,7 @@ Page({
     //1为报名截止 活动未结算，
     //2为报名截止 活动结算
 
-    myEnrollData: [],
+    myEnrollData: {},
     isManager: false,
     couldSigned: false,
     show: false
@@ -54,14 +54,14 @@ Page({
       that.setData({
         eventState: 1
       })
-    }    
+    }   
     //报名截止 活动结算，关闭报名和签到，活动发起者打开结算按钮，eventState设为2
     if (_beginTime < new Date()) {
       that.setData({
         eventState: 2
       })
     }
-
+    //活动进行状态
     console.log(that.data.eventState)
 
     //获取社团头像
@@ -72,7 +72,6 @@ Page({
         })
       }
     })
-
     //获取是否是管理员身份
     db.collection('club_member').where({
       club_id: that.data.eventData.club_id,
@@ -87,26 +86,38 @@ Page({
     })
 
     //获取我的报名信息
-    var tmp = that.getMyEnroll()
-    console.log(tmp)
-    //判断能否签到
-    if (beginSignTime <= new Date() && _beginTime > new Date() && that.data.myEnrollData.length != 0 && that.data.myEnrollData[0].isSign == false) {
-      that.setData({
-        couldSigned: true
-      })      
-    }
-    else {
-      that.setData({
-        couldSigned: false
-      }) 
-    }
-    console.log(beginSignTime)
-    console.log(_beginTime)
-    console.log(that.data.myEnrollData.length)
-    console.log(that.data.myEnrollData)
-    console.log(that.data.myEnrollData[0].isSign)
-
-    console.log(that.data.couldSigned)
+    db.collection('event_member').where({
+      club_id: _.eq(that.data.eventData.club_id),
+      student_id: _.eq(app.globalData.stuNum),
+      event_id: _.eq(that.data.eventData._id)
+    }).get({
+      success(res) {
+        //console.log(res.data)
+        that.setData({
+          myEnrollData: res.data
+        })
+        //判断能否签到
+        if (beginSignTime <= new Date() && _beginTime > new Date() && that.data.myEnrollData.length != 0 && that.data.myEnrollData[0].isSign == false) {
+          that.setData({
+            couldSigned: true
+          })
+        }
+        else {
+          that.setData({
+            couldSigned: false
+          })
+        }
+        //开始签到时间和活动开始时间
+        //console.log(beginSignTime)
+        //console.log(_beginTime)
+        //我的报名数据
+        //console.log(that.data.myEnrollData)
+        //是否签到
+        console.log(that.data.myEnrollData[0].isSign)
+        //是否能够签到
+        console.log(that.data.couldSigned)
+      }
+    })
 
   },
 
@@ -181,7 +192,42 @@ Page({
           icon: 'success',
           duration: 1000
         })
-        that.getMyEnroll()
+
+        //获取我的报名信息 判断能否签到
+        db.collection('event_member').where({
+          club_id: _.eq(that.data.eventData.club_id),
+          student_id: _.eq(app.globalData.stuNum),
+          event_id: _.eq(that.data.eventData._id)
+        }).get({
+          success(res) {
+            //console.log(res.data)
+            that.setData({
+              myEnrollData: res.data
+            })
+
+            var _signEndTime = new Date(that.data.eventData.signEndTime)
+            var _beginTime = new Date(that.data.eventData.beginTime)
+            var timestamp = Date.parse(_beginTime)
+            timestamp = timestamp - 30 * 60 * 1000
+            var beginSignTime = new Date(timestamp)
+            //判断能否签到
+            if (beginSignTime <= new Date() && _beginTime > new Date() && that.data.myEnrollData.length != 0 && that.data.myEnrollData[0].isSign == false) {
+              that.setData({
+                couldSigned: true
+              })
+            }
+            else {
+              that.setData({
+                couldSigned: false
+              })
+            }
+            //是否签到
+            console.log(that.data.myEnrollData[0].isSign)
+            //是否能够签到
+            console.log(that.data.couldSigned)
+          }
+        })
+
       }
     })
   },
@@ -207,13 +253,16 @@ Page({
           icon: 'success',
           duration: 1000
         })
-        that.getMyEnroll()
+        that.setData({
+          'couldSigned': false
+        })
       }
     })
   },
 
   //获取报名信息
-  getMyEnroll: function() {
+  /**
+   *   getMyEnroll: function () {
     var that = this
 
     db.collection('event_member').where({
@@ -227,10 +276,10 @@ Page({
           myEnrollData: res.data
         })
         console.log(that.data.myEnrollData)
-        return that.data.myEnrollData
       }
     })
   },
+  */
 
   //活动结算
   finish: function() {
