@@ -261,8 +261,7 @@ Page({
   },
 
   //获取报名信息
-  /**
-   *   getMyEnroll: function () {
+  /*  getMyEnroll: function () {
     var that = this
 
     db.collection('event_member').where({
@@ -278,8 +277,8 @@ Page({
         console.log(that.data.myEnrollData)
       }
     })
-  },
-  */
+  },   */
+  
 
   //活动结算
   finish: function() {

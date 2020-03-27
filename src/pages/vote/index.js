@@ -32,7 +32,8 @@ Page({
 
     /*获取投票信息*/
     that.setData({
-      voteData: app.globalData.currentVote
+      voteData: app.globalData.currentVote,
+      checkboxMax: app.globalData.currentVote.is_multiple
     })
 
     /*获取创建人信息*/
@@ -80,6 +81,8 @@ Page({
 
     let checkboxItems = this.data.options;
     let checkboxMax = this.data.checkboxMax;
+
+    console.log(this.data)
 
     let values = e.detail.value;
 
@@ -211,7 +214,7 @@ Page({
           student_id: app.globalData.stuNum,
         }).get({
           success(res2) {
-            console.log(res2)
+            //console.log(res2)
             if (res2.data.length > 0) {
               that.setData({
                 hadChosen: res2.data //将包括vote_id,selection_id和student_id的数组存进data里面
@@ -248,7 +251,7 @@ Page({
     /*判断投票是否过期 */
     db.collection('vote').doc(that.data.voteData._id).get({
       success(res) {
-        console.log(res)
+        //console.log(res)
         if (res.data.state == true) {
           if (res.data.deadline < new Date()) {
             wx.cloud.callFunction({

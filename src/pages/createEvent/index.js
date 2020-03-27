@@ -167,7 +167,7 @@ Page({
   /*点击提交*/
   showTopTips: function () {
     var that = this
-    console.log(that.data)
+    //console.log(that.data)
     if (that.data.name && that.data.content && that.data.location) {
       console.log(1)
       var isSelection = true
@@ -209,7 +209,7 @@ Page({
               club_name: app.globalData.currentClub.name,
               name: that.data.name,
               content: that.data.content,
-              level: that.data.levelIndex+1,
+              level: that.data.level[that.data.levelIndex],
               location: that.data.location,
               timestamp: timestamp,
               timestamp2: timestamp2,
@@ -251,7 +251,7 @@ Page({
                   club_name: app.globalData.currentClub.name,
                   name: that.data.name,
                   content: that.data.content,
-                  level: that.data.levelIndex + 1,
+                  level: that.data.level[that.data.levelIndex],
                   location: that.data.location,
                   timestamp: timestamp,
                   timestamp2: timestamp2,

@@ -119,7 +119,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    
+    console.log(1)
   },
 
   /**
@@ -148,7 +148,7 @@ Page({
       })
       db.collection('vote').where({
         club_id: _.eq(app.globalData.currentClub._id)
-      }).orderBy('_id', 'desc').get({
+      }).orderBy('deadline', 'desc').get({
         success(res){
           console.log("获取投票列表成功")
           that.setData({
@@ -193,8 +193,9 @@ Page({
     })
     db.collection('event').where({
       club_id: _.eq(app.globalData.currentClub._id)
-    }).orderBy('_id', 'desc').get({
+    }).orderBy('beginTime', 'desc').get({
       success(res){
+        console.log(res.data)
         that.setData({
           events: res.data
         })

@@ -3,7 +3,7 @@
   <view class="page__bd">
     <view class="weui-cells__title">{{club}}的成员列表</view>
     <view class="weui-cells weui-cells_after-title" wx:if="{{!isSelecting}}">
-      <view wx:for="{{members}}" class="weui-cell">
+      <view wx:for="{{members}}" class="weui-cell" wx:key="_id">
         <view class="weui-cell__hd">
           <image src="{{item.avatarurl}}" style="margin-right: 5px;vertical-align: middle;width:20px; height: 20px;"></image>
         </view>

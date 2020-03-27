@@ -9,7 +9,7 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-    "checkSiteMap": false
+		"checkSiteMap": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.3.0",
@@ -20,7 +20,7 @@
 	},
 	"isGameTourist": false,
 	"cloudfunctionRoot": "functions/",
-  "miniprogramRoot":"src/",
+	"miniprogramRoot": "src/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

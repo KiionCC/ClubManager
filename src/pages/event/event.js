@@ -42,7 +42,8 @@ Page({
     wx.cloud.callFunction({
       name: 'isRegistered',
       complete: res => {
-        console.log(res)
+        console.log("获取用户登录信息成功")
+        //console.log(res.result[0])
         app.globalData.isRegistered = res.result.length
         if (app.globalData.isRegistered) {
           app.globalData.stuNum = res.result[0].number //如果已注册，获取学号
@@ -54,7 +55,7 @@ Page({
     //获取公开活动列表
     db.collection('event').where({
       isPublic: _.eq(true)
-    }).orderBy('_id', 'desc').get({
+    }).orderBy('beginTime', 'desc').get({
       success(res) {
         if (res.data.length > 0) {
           that.setData({
