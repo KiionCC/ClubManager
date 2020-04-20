@@ -175,6 +175,9 @@ Page({
           console.log(res)
           /*认证成功*/
           if(res.result == "ok"){
+            app.globalData.isRegistered = 1;
+            app.globalData.stuNum = that.data.student.stuNum;
+            app.globalData.name = that.data.student.name;
             wx.hideLoading();
             wx.showToast({
               title: '认证成功',
@@ -182,8 +185,7 @@ Page({
               duration: 1000
             });
             setTimeout(function () {
-              wx.navigateBack({
-
+              wx.navigateBack({                
               })
             }, 1000);
           }

@@ -55,6 +55,22 @@ Page({
     //   }
     // })
 
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    var that = this
+
     /*获取我的社团列表*/
     if (app.globalData.isRegistered) {
       wx.showLoading({
@@ -88,21 +104,6 @@ Page({
       })
     }
 
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
   },
 
   /**
@@ -162,50 +163,6 @@ Page({
             isApplied: res.data,
             isEmpty: false
           });
-          // /*获取是否已加入*/
-          // for(var i = 0; i < that.data.isIn.length; i++){
-          //   db.collection('club_member').where({
-          //     club_id: _.eq(that.data.allClubs[i]._id),
-          //     student_id: _.eq(app.globalData.stuNum)
-          //   }).get({
-          //     success(res){
-          //       var up = "isIn[" + i + "]";//先用一个变量，把(isIn[i])用字符串拼接起来
-          //       if(res.data.length > 0){ 
-          //         that.setData({
-          //           [up]: true
-          //         })
-          //       }
-          //       else{
-          //         that.setData({
-          //           [up]: false
-          //         })
-          //       }
-          //     },
-          //     fail: console.error
-          //   })
-          // }
-          // /*获取是否已申请*/
-          // for (var i = 0; i < that.data.isApplied.length; i++) {
-          //   db.collection('mem_application').where({
-          //     club_id: _.eq(that.data.allClubs[i]._id),
-          //     student_id: _.eq(app.globalData.stuNum)
-          //   }).get({
-          //     success(res) {
-          //       var up = "isApplied[" + i + "]";//先用一个变量，把(isIn[i])用字符串拼接起来
-          //       if (res.data.length > 0) {
-          //         that.setData({
-          //           [up]: true
-          //         })
-          //       }
-          //       else {
-          //         that.setData({
-          //           [up]: false
-          //         })
-          //       }
-          //     },
-          //     fail: console.error
-          //   })
-          // }
           wx.hideLoading();
           console.log("获取社团列表成功");
         }

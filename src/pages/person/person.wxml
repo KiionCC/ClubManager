@@ -14,7 +14,7 @@
     <text class="motto" wx:if="{{isRegistered}}">学号：{{stuNum}}\n姓名：{{name}}</text>
   </view>
   <!--个人信息  -->
-  <view class="my-info" bindtap='myInfo' hidden="{{!isRegistered}}" hover-class="list-hover">
+  <view class="my-info" bindtap='myInfo' wx:if="{{isRegistered}}" hover-class="list-hover">
     <view class="left">
       <view style="flex: 1;display: flex;align-items: center; ">
         <image class="icon-order" src="../../images/Marker.png"></image>
@@ -24,7 +24,7 @@
   </view>
 
 
-  <view class="stu_register" bindtap='wantRegister' hidden="{{isRegistered}}" hover-class="list-hover">
+  <view class="stu_register" bindtap='wantRegister' wx:if="{{!isRegistered}}" hover-class="list-hover">
     <view class="left">
       <view style="flex: 1;display: flex;align-items: center; ">
         <image class="icon-order" src="../../images/Student.png"></image>
@@ -35,7 +35,7 @@
     </view>
   </view>
 
-  <view class="my-info" bindtap='createClub' hidden="{{!isRegistered}}" hover-class="list-hover">
+  <view class="my-info" bindtap='createClub' wx:if="{{isRegistered}}" hover-class="list-hover">
     <view class="left">
       <view style="flex: 1;display: flex;align-items: center; ">
         <image class="icon-order" src="../../images/Puzzle-Piece.png"></image>
@@ -44,7 +44,7 @@
     </view>
   </view>
 
-  <view class="my-info" bindtap='myApplication' hidden="{{!isRegistered}}" hover-class="list-hover">
+  <view class="my-info" bindtap='myApplication' wx:if="{{isRegistered}}" hover-class="list-hover">
     <view class="left">
       <view style="flex: 1;display: flex;align-items: center; ">
         <image class="icon-order" src="../../images/applications.png"></image>
@@ -53,7 +53,7 @@
     </view>
   </view>
 
-  <view class="my-info" bindtap='handle' hidden="{{!isAdmin}}" hover-class="list-hover" style="margin-top: 10px">
+  <view class="my-info" bindtap='handle' wx:if="{{isAdmin}}" hover-class="list-hover" style="margin-top: 10px">
     <view class="left">
       <view style="flex: 1;display: flex;align-items: center; ">
         <image class="icon-order" src="../../images/Stamp.png"></image>

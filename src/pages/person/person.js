@@ -21,18 +21,52 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+
+/*
+      //获取注册状态
+      wx.cloud.callFunction({
+        name: 'isRegistered',
+        complete: res => {
+          //console.log(res)
+          app.globalData.isRegistered = res.result.length
+          if (app.globalData.isRegistered) {
+            app.globalData.stuNum = res.result[0].number //如果已注册，获取学号
+            app.globalData.name = res.result[0].name
+            that.setData({
+              isRegistered: app.globalData.isRegistered,
+              stuNum: app.globalData.stuNum,
+              name: app.globalData.name
+            })
+            console.log("是否注册：true")
+          }
+          else {
+            console.log("是否注册：false")
+          }
+        }
+      })
+
+      that.setData({
+        isRegistered: app.globalData.isRegistered,
+        stuNum: app.globalData.stuNum,
+        name: app.globalData.name
+      })
+*/
+
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    //console.log("person " + app.globalData.isRegistered)
     var that = this
-
-
-    wx.getUserInfo({
-      success: res => {
-        app.globalData.userInfo = res.userInfo
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    })
 
     if (app.globalData.userInfo) {
       this.setData({
@@ -61,53 +95,25 @@ Page({
       })
     }
 
-    that.setData({
-      isRegistered: app.globalData.isRegistered,
-      stuNum: app.globalData.stuNum,
-      name: app.globalData.name
-    })
+    //console.log("是否登录：" + app.globalData.isLogin)
 
-    wx.cloud.callFunction({
-      name: 'isAdmin',
-      complete: res => {
-        if (res.result.length > 0) {
-          that.setData({
-            isAdmin: true
-          })
+    if (app.globalData.isLogin && app.globalData.isRegistered) {
+      that.setData({
+        isRegistered: app.globalData.isRegistered,
+        stuNum: app.globalData.stuNum,
+        name: app.globalData.name
+      })
+      wx.cloud.callFunction({
+        name: 'isAdmin',
+        complete: res => {
+          if (res.result.length > 0) {
+            that.setData({
+              isAdmin: true
+            })
+          }
         }
-      }
-    })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    var that = this
-    //获取注册状态
-    wx.cloud.callFunction({
-      name: 'isRegistered',
-      complete: res => {
-        console.log(res)
-        app.globalData.isRegistered = res.result.length
-        if (app.globalData.isRegistered) {
-          app.globalData.stuNum = res.result[0].number //如果已注册，获取学号
-          app.globalData.name = res.result[0].name
-          that.setData({
-            isRegistered: app.globalData.isRegistered,
-            stuNum: app.globalData.stuNum,
-            name: app.globalData.name
-          })
-        }
-      }
-    })
+      })
+    }
 
   },
 
@@ -191,5 +197,15 @@ Page({
     wx.navigateTo({
       url: '../handleCreate/index',
     })
+  },
+  //获取用户信息
+  bindGetUserInfo: function(e) {
+    //console.log(e.detail.userInfo)
+    console.log("获取用户信息成功，成功登录")
+    app.globalData.userInfo = e.detail.userInfo
+    app.globalData.isLogin = true
+    this.onShow()
   }
+
 })
+

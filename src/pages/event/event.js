@@ -21,36 +21,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this
 
-    if (!app.globalData.userInfo) {
-      wx.showLoading({
-        title: '登录中',
-      });
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-          wx.hideLoading();
-        }
-      })
-    }
-    //获取注册状态
-    wx.cloud.callFunction({
-      name: 'isRegistered',
-      complete: res => {
-        console.log("获取用户登录信息成功")
-        //console.log(res.result[0])
-        app.globalData.isRegistered = res.result.length
-        if (app.globalData.isRegistered) {
-          app.globalData.stuNum = res.result[0].number //如果已注册，获取学号
-          app.globalData.name = res.result[0].name
-        }
-      }
-    })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function() {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    var that = this
 
     //获取公开活动列表
     db.collection('event').where({
@@ -83,20 +68,6 @@ Page({
       },
       fail: console.error
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
   },
 
   /**

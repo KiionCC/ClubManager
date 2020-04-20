@@ -1,3 +1,4 @@
+wx.cloud.init()
 //app.js
 App({
   onLaunch: function () {
@@ -5,13 +6,7 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+  
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -21,20 +16,42 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
+              this.globalData.isLogin = true
+              console.log("成功登录")
 
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
+              //获取注册状态
+              wx.cloud.callFunction({
+                name: 'isRegistered',
+                complete: res => {
+                  //console.log(res)
+                  this.globalData.isRegistered = res.result.length
+                  if (this.globalData.isRegistered) {
+                    this.globalData.stuNum = res.result[0].number //如果已注册，获取学号
+                    this.globalData.name = res.result[0].name
+                    console.log("已经注册")
+                  }
+                  else {
+                    console.log("尚未注册")
+                  }
+                }
+              })
             }
           })
+        }
+        else{
+          console.log("尚未登录")
         }
       }
     })
   },
   globalData: {
     userInfo: null,
+    isLogin: false,
     isRegistered: false,
     stuNum: 0,
     name: "",
