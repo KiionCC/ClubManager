@@ -10,7 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tabs: ["加入社团", "创建社团"],
+    tabs: ["待加入社团", "创建社团"],
     activeIndex: 0,
     sliderOffset: 0,
     sliderLeft: 0,

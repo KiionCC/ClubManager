@@ -37,7 +37,8 @@ exports.main = async (event, context) => {
   else if (event.type == 'setManager') {
     try {
       return await db.collection('club_member').where({
-        student_id: _.in(event.members)
+        student_id: _.in(event.members),
+        level: _.eq(0)
       }).update({
         data: {
           level: 1,
@@ -50,7 +51,8 @@ exports.main = async (event, context) => {
   else if (event.type == 'cancelManager') {
     try {
       return await db.collection('club_member').where({
-        student_id: _.in(event.members)
+        student_id: _.in(event.members),
+        level: _.eq(1)
       }).update({
         data: {
           level: 0,

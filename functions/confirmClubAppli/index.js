@@ -31,6 +31,7 @@ exports.main = async (event, context) => {
       //添加社长
       return await db.collection('club_member').add({
         data: {
+          _id: String(tmp1.data.student_id) + tmp2._id,
           club_id: tmp2._id,
           level: 2,
           job: "",

@@ -289,6 +289,7 @@ Page({
                                     that.setData({
                                       club: app.globalData.currentClub.name,
                                       members: objs,
+                                      selectList: ['设为代表队', '取消代表队']
                                     })
                                     wx.showLoading({
                                       title: '刷新中',
@@ -387,10 +388,10 @@ Page({
               
               wx.cloud.callFunction({
                 // 云函数名称
-                name: 'cancelManager',
+                name: 'manageMembers',
                 // 传给云函数的参数
                 data: {
-                  type: 'setTeam',
+                  type: 'cancelManager',
                   members: that.data.selected,
                 },
                 success(res) {
@@ -450,10 +451,10 @@ Page({
                     console.log('用户点击主操作')
                     wx.cloud.callFunction({
                       // 云函数名称
-                      name: 'removeMember',
+                      name: 'manageMembers',
                       // 传给云函数的参数
                       data: {
-                        type: 'setTeam',
+                        type: 'removeMember',
                         members: that.data.selected,
                       },
                       success(res) {
